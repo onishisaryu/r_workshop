@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R workshop</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Saryu Onishi" />
+    <meta name="date" content="2025-08-19" />
+    <script src="workshop_files/header-attrs-2.29/header-attrs.js"></script>
+    <link href="workshop_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="workshop_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="workshop_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide
+
+&lt;br&gt;&lt;br&gt;
+
+# R Workshop
+## The Basics
+### Saryu Onishi
+???
+- c to clone (mirror display)
+- p to move to presenter mode (make one display a presenter display)
+---
+# Introduction
+Have you ever done analysis and thought: 
+- “I know what I want and this point-and-click software isn’t doing what I want”
+--
+
+- “I am doing the same analysis again and again ... is there a way to automate this?”
+--
+
+&lt;br&gt;&lt;br&gt;
+
+Good news! Instead of reading through complicated documentation, you can learn a whole new programming language to recreate an analysis method to customize and automate data analysis!
+
+&lt;!--
+this is how you comment
+--&gt;
+---
+# Vibe coding
+Generative AI will literally do everything for you these days, including writing code. &lt;br&gt;
+
+It might feel like you don't need to learn the basics, but I strongly disagree.&lt;br&gt;
+
+Knowing even the basics will speed up the process **a lot**. 
+
+---
+# The scope of today's workshop
+Our goal today is to build the most minimal foundation on which you can stack your coding skills onto. In interest of time, we will skip:
+- Legacy basics like base subsetting - easier methods exist via *packages*.
+- Flow control (`if/else` statements, for loops, `purrr::map()`) and custom functions — *extremely* useful, but not required for basic analysis.
+
+---
+# The scope of today's workshop
+.less-right[
+![Rlogo](img/R_logo.png)
+]
+--
+.more-left[
+In this session, we will cover:
+]
+--
+&lt;div class="more-left"&gt;
+&lt;ul&gt;
+&lt;li&gt;Who is R statistical programming language for.&lt;/li&gt;
+--
+&lt;li&gt;Fundamentals of R programming.&lt;/li&gt;
+--
+&lt;li&gt;Writing and organization code.&lt;/li&gt;
+--
+&lt;li&gt;Tips and tricks that I highly recommend utilizing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+---
+# R programming
+First, let's talk about programming
+
+--
+- Modern software (like SPSS) has a clean graphical user interface designed to make computer operations easy via point and click features.
+
+--
+- "Programming" is writing step-by-step instructions for the computer to follow. 
+
+&lt;br&gt;
+
+--
+**R statistical programming language**
+- R is a specifically designed for stats (hence the popularity amongst scientists).
+- R is open-source. i.e., free to use! (unlike SPSS...)
+--
+
+---
+# R programming
+Why use R?
+- Reproducable process
+- Customizable features
+- Ability to partially or even fully automate tasks
+
+???
+Very broadly speaking, programming is the process of writing step-by-step instructions for the computer, compared to modern software that is mostly point-and-click (user interfaces designed to make computer operations accessible).
+We say “programming” and “coding”, but not all programs are the same. R is a programming language built for statistical analysis (in comparison, python is more generalist and hence, the jack of all trades, but master of none). So clearly, if you do statistical analysis, you could be using R. 
+---
+
+# Who is R for?
+Should you be using R? Ask yourself the following:
+-	Are you doing the same analysis repeatedly? 
+-	Do you deal with large or messy datasets?
+-	Are there more specific things you want to do, that’s forces you to use multiple software or add-ons?
+-	Are you particular about the way to visualize your data?
+-	Modelling or machine learning, perhaps?
+---
+
+# Who is R for?
+These are all good reasons to consider R. But it is also possible you might not need R if:
+-	Excel or SPSS is good enough – you know it and you don’t need much more.
+-	Relatively simple analysis (t-test, correlation analysis) with smaller datasets.
+In the end, R is another tool to use. It can make data analysis less of a hassle for some researchers, but using R doesn’t make your analysis better. 
+-	R won’t magically improve your analysis, but it can make your work faster, cleaner, and reproducible — if your problems match its strengths.
+---
+
+# Fundimentals of R
+Here are the fundamentals of R that genAI assumes you know:
+- Difference between R and R studio
+- Scripts, console, terminal
+- The working directory
+- objects and the environemnt
+- import and export data
+- data structure: vectors, data frames and shape
+- packages (dplyr example)
+- control structures: for and if
+- functions
+---
+
+# Difference between R and RStudio
+Some people may gloss over this detail, but these are important distinctions:
+- **R**: the programming language *and* interpreter (the engine).
+- **Packages**: add-ons for R (e.g., tidyverse, gt).
+- **RStudio**: an Integrated development environment, or IDE (contains the console + plots + Git)
+
+---
+# Difference between R and RStudio
+- R works without RStudio; RStudio does nothing without R.
+&lt;br&gt;
+
+### The Kitchen Analogy
+
+--
+&lt;div style="text-align: center;"&gt;
+&lt;div style="display: inline-block; margin: 0 20px; vertical-align: top;"&gt;
+&lt;div&gt;R&lt;/div&gt;
+&lt;img src="img/R_stove.jpg" height="175" /&gt;
+&lt;/div&gt;
+???
+**the kitchen analogy**
+- R is like a stove. 
+ - lightweight, 
+ - you can cook on it, but 
+ - a little inconvenient
+--
+&lt;div style="display: inline-block; margin: 0 20px; vertical-align: top;"&gt;
+&lt;div&gt;Packages&lt;/div&gt;
+&lt;img src="img/Rpackages_utensils.jpg" height="175" /&gt;
+&lt;/div&gt;
+???
+- R packages are like cooking utensils
+ - makes it more convenient to cook
+ - thats it
+--
+&lt;div style="display: inline-block; margin: 0 20px; vertical-align: top;"&gt;
+&lt;div&gt;R studio IDE&lt;/div&gt;
+&lt;img src="img/Rstudio_kitchen.jpg" height="175" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+???
+- R studio
+ - clean environment for maximum productiveity
+ 
+---
+# Scripts, Console, Terminal
+- The **R script** is the document your write code in ('.R' file extension)
+
+--
+- The **console** is where the code runs.
+
+--
+ - *Note:* You can test code here, but it will NOT save.
+
+--
+-	The **terminal** is the system command line. Will not execute R code.
+
+--
+ - Don't worry about it unless you know bash.
+ 
+---
+# Working Directory 
+
+.pull-left[
+- The folder which R works out of.
+- Important for when you read and write data.
+- Can be set with a file path
+ - e.g.: `“/Users/saryu/Desktop”`
+]
+
+--
+.pull-right[
+**Code example:**
+
+``` r
+# to check wd
+getwd() 
+```
+
+```
+## [1] "C:/Users/onis0001/OneDrive - University of Oklahoma/r workshop"
+```
+]
+
+--
+.pull-left[
+
+]
+
+???
+The working directory is the folder that R uses as a reference point. (This is an important concept to understand when importing data).&lt;br&gt;
+Before working, you may need to "set" the working directory. You can do this by clicking buttons, but code is more reproducible.
+- To check file path, you can look at folders (Windows) or finder (MacOS).
+- File paths written as folders separated by forward slashed (e.g., “/Users/saryu/Desktop”)
+
+---
+# Working Directory 
+
+.pull-left[
+- The folder which R works out of.
+- Important for when you read and write data.
+- Can be set with a file path
+ - e.g.: `“/Users/saryu/Desktop”`
+]
+.pull-right[
+**Code example:**
+
+``` r
+# to check wd
+getwd() 
+```
+
+```
+## [1] "C:/Users/onis0001/OneDrive - University of Oklahoma/r workshop"
+```
+
+``` r
+# to set wd
+# setwd(“path/to/your/directory”)
+# setwd("~/OneDrive - University of Oklahoma/r workshop")
+```
+]
+
+---
+# Objects and Environemnt
+.pull-left[
+Data and outputs should always be stored.
+- This allows you to recall data.
+- Data can be done by creating an **object** using `&lt;-` or `=`
+ 
+**Note:** Object names should be as descriptive as possible.
+]
+
+--
+.pull-right[
+**Code example:**
+
+``` r
+n &lt;- 5
+
+numbers &lt;- c(1, 3, 5, 7)
+```
+]
+???
+In R, data and outputs can be stored in *objects*. 
+- This allows users to refernce it later
+This is done by assigning with the assignment operators “&lt;-“or “=”
+- It is best practice to make sure object names are as descriptive as possible
+Objects are stored in the *environment* of a session. This is one of the four quadrants of the R studio IDE.
+
+**tip: ** double click the object to view()
+
+---
+# Objects and Environemnt
+.pull-left[
+Data and outputs should always be stored.
+- This allows you to recall data.
+- Data can be done by creating an **object** using `&lt;-` or `=`
+ 
+**Note:** Object names should be as descriptive as possible.
+]
+.pull-right[
+**Code example:**
+
+``` r
+n &lt;- 5
+
+numbers &lt;- c(1, 3, 5, 7)
+
+n
+```
+
+```
+## [1] 5
+```
+
+``` r
+numbers
+```
+
+```
+## [1] 1 3 5 7
+```
+
+``` r
+# print(numbers * n)
+```
+]
+
+---
+# Import and Export Data
+.pull-left[
+To begin analysis, you must import data from a specific folder.
+- To import data, you need: 
+ - the file path (`/folder/filename.csv`)
+ - a read function (`read_csv()`)
+
+]
+.pull-right[
+**Code example:**
+
+``` r
+# to import data
+data &lt;- readr::read_csv("sample/cleanData.csv")
+# for excel files (gross) use readxl::read_xlsx("sample/cleanData.xlsx")
+head(data[1:4])
+```
+
+```
+## # A tibble: 6 × 4
+##   subjectID stage position mean_angle
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
+## 1 lo01          1 HEAD           78.0
+## 2 lo01          2 HEAD           79.3
+## 3 lo01          3 HEAD           78.6
+## 4 lo01          4 HEAD           78.7
+## 5 lo01          5 HEAD           78.1
+## 6 lo01          6 HEAD           84.2
+```
+]
+
+???
+import data is often the first hurdle. Like setting working directory, you can do this by clicking buttons, but coding it is faster – I  promise
+-	When doing this, you need the file path (location of the file + file name). 
+ - If you set the wd, you can use a relative path starting at the current wd.
+ - If the working directory is set to the folder the file is in, the file path can simply be the file name.
+- To import: `readr::read_csv(path)` or `readxl::read_excel(path)`.
+-	To export: `readr::write_csv(df, path)`.
+
+write data is useful when you process data
+
+---
+# Import and Export Data
+.pull-left[
+You can also write data to a specified folder.
+- To export data, you need
+ - data object
+ - write function (`write_csv()`)
+]
+.pull-right[
+**Code example:**
+
+``` r
+# to import data
+clean_data &lt;- data[1:4]
+# write_csv(clean_data,"workshop.csv")
+```
+]
+
+---
+# Data structure
+
+.pull-left[
+## Data frames
+-	Data frames are R table
+ - Tibbles are the modern `tidyverse` equivalent.
+
+## Accessing columns
+- Columns can be extracted with `$`
+]
+--
+
+.pull-right[
+**Code example:**
+
+``` r
+head(clean_data, n=3)
+```
+
+```
+## # A tibble: 3 × 4
+##   subjectID stage position mean_angle
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
+## 1 lo01          1 HEAD           78.0
+## 2 lo01          2 HEAD           79.3
+## 3 lo01          3 HEAD           78.6
+```
+
+``` r
+clean_data$mean_angle
+```
+
+```
+##   [1] 78.01618 79.33775 78.64666 78.70490 78.05461 84.19058 81.30023 83.11668
+##   [9] 80.13195 50.66410 65.24468 61.57830 62.43939 64.65383 65.23584 64.42524
+##  [17] 63.97524 62.14062 58.05739 56.84658 42.82319 44.68284 43.83269 45.19883
+##  [25] 42.69916 42.77812 42.04177 40.05922 31.88049 35.56008 81.90074 83.16805
+##  [33] 82.51693 83.30746 82.95358 82.86338 82.68277 73.66867 57.35461 58.98407
+##  [41] 58.81553 58.37735 57.79389 56.81458 54.87852 53.80456 38.44301 38.73311
+##  [49] 38.67437 38.75342 36.89262 36.24722 33.53690 25.69038 83.59749 81.06933
+##  [57] 85.25870 84.75876 84.22468 82.24896 62.88503 60.23468 59.22060 58.38467
+##  [65] 56.60070 58.40631 56.10731 51.69201 49.10355 48.57691 47.84873 47.04686
+##  [73] 84.88754 79.42452 83.67715 82.53413 77.90086 78.88488 77.69839 45.16309
+##  [81] 44.36809 45.78341 44.60428 44.65261 44.34575 45.05382 33.13182 31.79337
+##  [89] 32.72894 31.09405 30.89877 32.23505 35.68709 84.49637 84.52335 82.56173
+##  [97] 81.10410 81.22113 80.30662 73.32646 66.07157 58.12367 56.20374 58.10245
+## [105] 58.33666 58.91780 56.84121 53.28203 50.91723 63.93584 63.38924 62.52614
+## [113] 61.53935 60.49481 57.63876 54.29227 50.15090 74.93837 79.77627 81.72975
+## [121] 78.46164 78.40183 77.20993 63.30597 65.37414 66.49239 66.74043 67.10480
+## [129] 66.89403 68.31872 67.85616 51.31249 52.77471 53.65901 53.64527 53.02134
+## [137] 50.34289 46.84192 75.00708 71.70113 77.02075 76.91373 79.74182 73.18144
+## [145] 57.84271 57.41920 56.61134 55.95742 56.28280 56.09367 57.04945 57.19250
+## [153] 50.35494 47.57201 46.47014 45.94395 45.27669 45.13913 43.00164 74.93837
+## [161] 79.77627 81.72975 78.46164 78.40183 77.20993 63.30597 65.37414 66.49239
+## [169] 66.74043 67.10480 66.89403 68.31872 67.85616 51.31249 52.77471 53.65901
+## [177] 53.64527 53.02134 50.34289 46.84192 72.96087 63.74125 57.32004 60.65936
+## [185] 51.71714 54.59233 47.31010 46.42779 65.22540 66.23320 67.59568 67.98534
+## [193] 68.08049 67.87879 67.96486 67.49601 25.89684 24.52916 24.52010 27.81420
+## [201] 27.66163 27.62352 28.70465 26.28239 73.58598 76.73304 69.74016 74.43024
+## [209] 79.69515 72.73549 61.05176 64.15039 65.87076 65.39507 64.91536 64.24241
+## [217] 63.12116 60.50823 41.98613 42.38023 42.55271 43.46855 39.60881 38.63725
+## [225] 31.58417 64.51147 64.89133 69.09305 72.13796 71.42948 60.85587 61.64306
+## [233] 60.78196 59.71393 57.90056 46.03539 46.49682 45.88156 45.73192 44.04909
+## [241] 68.04406 70.18067 68.59575 72.91638 71.03676 60.53205 46.93396 73.86544
+## [249] 73.59496 73.99785 72.47574 70.83577 67.86154 64.67517 56.92019 57.01578
+## [257] 55.76426 54.27510 51.06671 45.16930 35.22967 73.82313 71.76159 69.11356
+## [265] 73.56414 74.35670 73.43894 71.70860 61.56021 48.54749 49.90428 49.05869
+## [273] 49.13717 47.95474 48.86178 48.23924 48.15541 36.36971 35.65642 36.19342
+## [281] 36.80881 37.48368 36.59233 34.12294 30.90934 73.26189 70.02649 68.12093
+## [289] 74.78386 76.54697 74.85198 75.76952 61.84073 60.86585 60.49154 60.49224
+## [297] 62.78908 63.89733 64.70375 33.81273 32.20953 31.83616 30.69238 31.07095
+## [305] 31.28044 31.42952 73.26189 70.02649 68.12093 74.78386 76.54697 74.85198
+## [313] 75.76952 53.33254 55.00751 55.79436 55.79240 54.33935 52.35711 52.25319
+## [321] 52.76178 52.51759 50.59532 47.76154 47.09744
+```
+]
+???
+Vectors are the atomic unit of R; most structures are made of vectors.
+-	Vectors contain homogeneous data
+- Note: *Not* the same as lists
+Data frames are tables/spreadsheets in R. Very useful, especially when data wrangling with tidyverse.
+- This is why a lot of sample code uses "df" for tables
+- Note: this is the same as a tibble 
+ 
+---
+# Data structure
+
+.pull-left[
+## Data frames
+-	Data frames are R table
+ - Tibbles are the modern `tidyverse` equivalent.
+
+## Accessing columns
+- Columns can be extracted with `$`
+]
+--
+
+.pull-right[
+**Code example:**
+
+``` r
+gradebook &lt;- data.frame(
+  name  = c("aaron", "jacqueline", "blake"),
+  score = c(55, 22, 80)
+)
+
+gradebook
+```
+
+```
+##         name score
+## 1      aaron    55
+## 2 jacqueline    22
+## 3      blake    80
+```
+
+``` r
+gradebook$score
+```
+
+```
+## [1] 55 22 80
+```
+]
+
+---
+# Data structure
+## Shape
+-	Humans like wide data.
+-	Computers like long data (each row represents a single data point).
+- Knowing this can speed up workflow.
+
+.pull-left.no-vcenter[.center[
+
+```
+## [1] "wide data"
+```
+
+```
+##    Name Trial.1 Trial.2 Trial.3
+## 1   Bob       4       5       4
+## 2 Alice       3       4       6
+```
+]]
+.pull-right[.center[
+
+```
+## [1] "long data"
+```
+
+```
+## # A tibble: 6 × 3
+##   Name  Trial   Value
+##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1 Bob   Trial.1     4
+## 2 Bob   Trial.2     5
+## 3 Bob   Trial.3     4
+## 4 Alice Trial.1     3
+## 5 Alice Trial.2     4
+## 6 Alice Trial.3     6
+```
+]]
+---
+# Data structure
+## Shape
+.pull-left[.center[
+
+
+```
+## [1] "Data sheet 1"
+```
+
+```
+##   stage  hr
+## 1     1 100
+## 2     2 125
+## 3     3 150
+## 4     4 175
+```
+
+```
+## [1] "Data sheet 2"
+```
+
+```
+##   stage  hr
+## 1     1  70
+## 2     2 100
+## 3     3 120
+## 4     4 150
+```
+
+]]
+.pull-right[.center[
+
+```
+## [1] "Add subject info column and bind rows"
+```
+
+```
+##   stage  hr  Subject
+## 1     1 100 subject1
+## 2     2 125 subject1
+## 3     3 150 subject1
+## 4     4 175 subject1
+## 5     1  70 subject2
+## 6     2 100 subject2
+## 7     3 120 subject2
+## 8     4 150 subject2
+```
+]]
+
+---
+# Packages
+-	R is great because there are loads of packages to do various things. In these packages are loads of custom functions that enable you to take shortcuts – just like in Microsoft Excel. 
+-	base R has loads of useful functions, but these packages will make your life even easier:
+-	`tidyverse` should always be loaded in most of our use cases: handles most data wrangling and visualization tasks
+ - Contains `readr`, `dplyr`, `ggplot2`, `tidyr`, `purrr`, `tibble`, `stringr`, `forcats`
+- other useful packages:
+ - `psych`
+ - other stuff...
+???
+remeber the kitchen analogy?
+
+---
+# Packages
+Before using a package, you have to 
+- download it onto your computer. The `install.packages()` function does this.
+
+``` r
+# install.packages("tidyverse")
+```
+ - Note: you only have to run this once per computer
+- load it into your session environment
+
+``` r
+library(tidyverse) 
+```
+ - Note: you have to do this *every* new session
+ 
+---
+# Example: dplyr (dee-plyer)
+The first thing I would learn is dplyr grammar. Its very useful and a true foundational piece of knowledge.
+*Useful code:*
+-	`%&gt;%` (pipe operator): allows you to chain methods together
+-	`select()` to select columns of a data frame / tibble
+-	`filter()` to subset (filter) data
+-	`mutate()` to add a column
+-	`group_by()` and `summarize()` to summarize rows
+
+---
+# control structures
+These are not necessarily “essential”, but it is very useful, especially in the context of repeated tasks.
+## if else statements
+-	Execute code **if** a specified condition is met
+
+``` r
+value = 50
+weight = 50
+test = "shuttle run"
+if (test == "VO2max") {
+  final = value/weight
+} else {
+  final = value
+}
+```
+--
+
+```
+## [1] 50
+```
+---
+# control structures
+## for loops
+-	Repeat operations when the sequence can be specified.
+
+``` r
+files = 10
+counter &lt;- c()
+for (n in seq(files)) {
+  counter &lt;- c(counter, n)
+}
+```
+--
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+---
+# functions
+- There are loads of preprogrammed functions, but you can also make your own.
+ - `library()`, `getwd()`, `read_csv()`, are all examples of functions.
+ 
+-	Functions can reduce clutter and/or repetition, making debugging easier.
+
+-	If you abide by the “functional programming” line of thinking, you utilize functions, instead of for loops to execute complex tasks. 
+
+---
+# How to structure your R script
+## General guidelines
+-	Order is important. 
+ - R executes code from top to bottom. If you call an object before creating it, you’ll get an error
+
+--
+-	Name objects descriptively, use comments and separate section for readability
+
+--
+-	Flow:
+
+--
+ - Always load libraries at the top - scattering it across your document can make it prone to bugs
+ 
+--
+ - Options (digits, scipen, etc)
+ 
+--
+ - Import data (into an object!)
+
+???
+	If csv, read_csv()
+	If excel file, readxl::read_excel()
+o	Clean the dataset (Rename columns, select relevant columns, filter data)
+o	Conduct analysis 
+o	Outputs (plots, tables, exports) should always be at the bottom.
+
+---
+# Pseudocode 
+-	The process of pseudo-coding was introduced to me recently, and I think this is a great approach. Organization is EXTREMELY important in coding. This helps.
+-	What is pseudocoding? This is the process of writing out your goals in plain English before writing the code. For example:
+
+``` r
+# this program calculates the mean and sd of column x
+# import data
+## read csv
+# calculation
+## calculate mean of column x
+## calculate sd of column x
+# print results
+## print message: the mean is {mean} and sd is {sd}
+```
+
+---
+# Tips and tricks
+Here are some tricks I love to use, and highly recommend you use when using R and R studio
+-	Keyboard shortcuts are your friend
+ -	Use tab to autocomplete names to avoid typos (typos break code)
+ - Use cmd + shift + m or ctrl + shift + m for pipe operator
+ - Cmd + enter or ctrl + enter to run a line of code  
+ - Cmd + option + o or Alt + 0 to collapse all
+
+
+---
+# Tips and tricks
+-	Use comments and headers 
+ - hash (#) makes non-executable chunks – great for comments
+ - 5 hashed ##### or #---- allows the section under it to be collapsed
+ - Pro tip: for headers, do # section 1 #### or # section 1 ----
+-	Need a reminder on how to use a function? Use the help tab (accessible by putting “?” before the function name)
+-	Checking data
+ - View() and head() for quick peak at the data frame. 
+ - str() and glimpse() for data structure and data type 
+ 
+ 
+---
+# Tips and tricks
+-	Customize your experience with options()
+ - I like options(readr.show_col_types = FALSE)
+ - options(scipen = 999) disables scientific notation
+-	Use your resources. If you think to yourself “there must be a better way to do this”, there probably is. Search the internet but BE SPECIFIC with your search.
+ - Instead of “clean this data”, search “reshape data from wide to long”
+-	Miscellaneous
+ - More lines IS NOT better code. Clarity &gt; length
+ - Coding style is very much a thing. Like everyone, I think my style is the best style but im always open to suggestions. Generally I like to:
+- Use functions, but not too many. if I have to scroll up and down constantly just to follow the code, it’s too much.
+- New lines for new operations or long lists
+- Camel case or dot case, not snake case.
+ - I align with base R, snake case is recommended formatting. Pick one and stick with it 
+- sesssionInfo()shows your R version and loaded packages
+- restart session (cmd + shift + F10) – sometimes this fixes issues
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false,
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
