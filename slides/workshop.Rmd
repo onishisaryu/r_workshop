@@ -58,7 +58,8 @@ Knowing even the basics will speed up the process **a lot**.
 # The scope of today's workshop
 Our goal today is to build the most minimal foundation on which you can stack your coding skills onto. In interest of time, we will skip:
 - Legacy basics like base subsetting - easier methods exist via *packages*.
-- Flow control (`if/else` statements, for loops, `purrr::map()`) and custom functions — *extremely* useful, but not required for basic analysis.
+- Flow control (`if/else` statements, for loops, `purrr::map()`) and custom functions 
+ - *extremely* useful, but not required for basic analysis.
 
 ---
 # The scope of today's workshop
@@ -72,7 +73,9 @@ In this session, we will cover:
 --
 <div class="more-left">
 <ul>
-<li>Who is R statistical programming language for.</li>
+<li>Introduction to R statistical programming language</li>
+--
+<li>Who is R for?</li>
 --
 <li>Fundamentals of R programming.</li>
 --
@@ -96,9 +99,12 @@ First, let's talk about programming
 
 --
 **R statistical programming language**
-- R is a specifically designed for stats (hence the popularity amongst scientists).
-- R is open-source. i.e., free to use! (unlike SPSS...)
+
 --
+- Designed for stats (hence the popularity amongst scientists).
+
+--
+- Open-source. i.e., free to use! (unlike SPSS...)
 
 ---
 # R programming
@@ -113,18 +119,39 @@ We say “programming” and “coding”, but not all programs are the same. R 
 ---
 
 # Who is R for?
-Should you be using R? Ask yourself the following:
+Ask yourself the following:
+
+--
 -	Are you doing the same analysis repeatedly? 
+
+--
 -	Do you deal with large or messy datasets?
+
+--
 -	Are there more specific things you want to do, that’s forces you to use multiple software or add-ons?
+
+--
 -	Are you particular about the way to visualize your data?
+
+--
 -	Modelling or machine learning, perhaps?
+
+--
+
+These are all good reasons to consider R!
+
 ---
 
 # Who is R for?
-These are all good reasons to consider R. But it is also possible you might not need R if:
--	Excel or SPSS is good enough – you know it and you don’t need much more.
+It is also possible you might not need to learn R:
+
+--
+-	Excel or SPSS may be good enough – you know it and you don’t need much more.
+
+--
 -	Relatively simple analysis (t-test, correlation analysis) with smaller datasets.
+
+--
 In the end, R is another tool to use. It can make data analysis less of a hassle for some researchers, but using R doesn’t make your analysis better. 
 -	R won’t magically improve your analysis, but it can make your work faster, cleaner, and reproducible — if your problems match its strengths.
 ---
@@ -322,7 +349,7 @@ To begin analysis, you must import data from a specific folder.
 **Code example:**
 ```{r}
 # to import data
-data <- readr::read_csv("sample/cleanData.csv")
+data <- readr::read_csv("sampleData/cleanData.csv")
 # for excel files (gross) use readxl::read_xlsx("sample/cleanData.xlsx")
 head(data[1:4])
 ```
@@ -467,11 +494,10 @@ sub1 %>% mutate(Subject = "subject1") %>%
 # Packages
 -	R is great because there are loads of packages to do various things. In these packages are loads of custom functions that enable you to take shortcuts – just like in Microsoft Excel. 
 -	base R has loads of useful functions, but these packages will make your life even easier:
--	`tidyverse` should always be loaded in most of our use cases: handles most data wrangling and visualization tasks
- - Contains `readr`, `dplyr`, `ggplot2`, `tidyr`, `purrr`, `tibble`, `stringr`, `forcats`
-- other useful packages:
- - `psych`
- - other stuff...
+ -	`tidyverse` should always be loaded in most of our use cases: handles most data wrangling and visualization tasks
+  - Contains `readr`, `dplyr`, `ggplot2`, `tidyr`, `purrr`, `tibble`, `stringr`, `forcats`
+ - other useful packages:
+ - `stats`, `rstatix`, `psych`, `ggsignif`
 ???
 remeber the kitchen analogy?
 
@@ -551,17 +577,21 @@ print(counter)
 --
 -	Name objects descriptively, use comments and separate section for readability
 
---
--	Flow:
+---
+# How to structure your R script
+## Flow:
 
 --
- - Always load libraries at the top - scattering it across your document can make it prone to bugs
- 
+- Always load libraries at the top - scattering it across your document can make it prone to bugs
+
 --
- - Options (digits, scipen, etc)
- 
+- Options (digits, scipen, etc)
+
 --
- - Import data (into an object!)
+- Import data (into an object!)
+
+--
+- Data cleaning and analysis
 
 ???
 	If csv, read_csv()
@@ -590,36 +620,38 @@ o	Outputs (plots, tables, exports) should always be at the bottom.
 Here are some tricks I love to use, and highly recommend you use when using R and R studio
 -	Keyboard shortcuts are your friend
  -	Use tab to autocomplete names to avoid typos (typos break code)
- - Use cmd + shift + m or ctrl + shift + m for pipe operator
- - Cmd + enter or ctrl + enter to run a line of code  
- - Cmd + option + o or Alt + 0 to collapse all
+ - Use `cmd + shift + m` or `ctrl + shift + m` for pipe operator
+ - `Cmd + enter` or `ctrl + enter` to run a line of code  
+ - `Cmd + option + o` or `Alt + 0` to collapse all
 
 
 ---
 # Tips and tricks
 -	Use comments and headers 
  - hash (#) makes non-executable chunks – great for comments
- - 5 hashed ##### or #---- allows the section under it to be collapsed
+ - 5 hashed `#####` or `#----` allows the section under it to be collapsed
  - Pro tip: for headers, do # section 1 #### or # section 1 ----
 -	Need a reminder on how to use a function? Use the help tab (accessible by putting “?” before the function name)
 -	Checking data
- - View() and head() for quick peak at the data frame. 
- - str() and glimpse() for data structure and data type 
+ - `View()` and `head()` for quick peak at the data frame. 
+ - `str()` and `glimpse()` for data structure and data type 
  
  
 ---
 # Tips and tricks
--	Customize your experience with options()
- - I like options(readr.show_col_types = FALSE)
- - options(scipen = 999) disables scientific notation
+-	Customize your experience with `options()`
+ - I like `options(readr.show_col_types = FALSE)`
+ - `options(scipen = 999)` disables scientific notation
 -	Use your resources. If you think to yourself “there must be a better way to do this”, there probably is. Search the internet but BE SPECIFIC with your search.
  - Instead of “clean this data”, search “reshape data from wide to long”
 -	Miscellaneous
- - More lines IS NOT better code. Clarity > length
- - Coding style is very much a thing. Like everyone, I think my style is the best style but im always open to suggestions. Generally I like to:
-- Use functions, but not too many. if I have to scroll up and down constantly just to follow the code, it’s too much.
-- New lines for new operations or long lists
-- Camel case or dot case, not snake case.
- - I align with base R, snake case is recommended formatting. Pick one and stick with it 
-- sesssionInfo()shows your R version and loaded packages
-- restart session (cmd + shift + F10) – sometimes this fixes issues
+ - More lines **IS NOT** better code. Clarity > length
+ - `sesssionInfo()`shows your R version and loaded packages
+ - restart session (`cmd + shift + F10`) – sometimes this fixes issues
+
+---
+# Tips and tricks
+- Coding style is very much a thing. Like everyone, I think my style is the best style but im always open to suggestions. Generally I like to:
+ - Use functions, but not too many. if I have to scroll up and down constantly just to follow the code, it’s too much.
+ - New lines for new operations or long lists
+ - Camel case or dot case, not snake case.
