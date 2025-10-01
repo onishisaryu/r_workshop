@@ -10,7 +10,7 @@ getwd()
 ## 2) Packages ----
 # Install once; load every session
 # install.packages("tidyverse")
-library(tidyverse) # contains readr, dplyr, ggplot2, tidyr, purrr, tubble, stringr, forcats
+library(tidyverse) # contains readr, dplyr, ggplot2, tidyr, purrr, tibble, stringr, forcats
 library(readxl) # read excel files
 library(stats) # base R stats
 library(rstatix) # pipe friendly stats
@@ -64,39 +64,24 @@ describe(sampleData) # from psych
 ## 2) Data Structure ----
 # very important when doing any kind of data operation in R
 # wide data - each row might represent one subject
-sampleData_wide <-
+{sampleData_wide <-
   data.frame(
     subject = c("A", "B", "C"),
     HR_rest = c(60, 72, 68),      # heart rate at rest
     HR_post = c(150, 160, 140),   # heart rate after exercise
     VO2_rest = c(3.2, 2.8, 3.0),  # VO2 (ml/kg/min) at rest
     VO2_post = c(38.5, 42.0, 35.2) # VO2 after exercise
-  )
+  )}
 # View(sampleData_wide)
 sampleData_wide
 
 # long data - each row should be one data point
-sampleData_long  <- 
+{sampleData_long  <- 
   sampleData_wide %>% 
   pivot_longer(cols = -subject,
                names_to = c(".value","condition"),
-               names_sep = "_")
+               names_sep = "_")}
 sampleData_long
-
-## simple data operations ----
-# pull out values from a column
-sampleData_long[,4]  # position index
-sampleData_long[[4]]  # position  index
-sampleData_long$VO2 # name index
-
-# column names
-names(sampleData_long)
-colnames(sampleData_long)
-
-# doing calculations
-mean(sampleData_long$VO2)
-
-cor(sampleData_long$HR,sampleData_long$VO2)
 
 ## 3) dplyr ----
 raw_data <- read_csv('sampleData/dplyr.csv')
@@ -107,41 +92,70 @@ raw_data %>% select(hr, vo2)
 # same as 
 select(raw_data, hr, vo2)
 raw_data %>% select(., hr, vo2)
-raw_data[c('hr','vo2')]
+raw_data[c('hr','vo2')] # base R
 
 # Filter() to ... filter data
 raw_data %>% filter(subject == 'A01')
 raw_data[(raw_data['subject']=='A01'), ] # base R subsetting
 
-# left_join or full_join
+{# left_join or full_join
 join_data <- tibble(subject = c('A01','A02','A03'),
                     weight  = c(89,65,75),
                     age     = c(37,50,30))
 
-complete_data <- raw_data %>% inner_join(join_data, by = 'subject')
+complete_data <- raw_data %>% inner_join(join_data, by = 'subject')}
 complete_data
 # complete_data %>% write_csv('sampleData/dplyr2.csv')
 
 # mutate() to add a new column
-complete_data <-
+final <- 
   complete_data %>%
   mutate(vo2_rel = vo2 * 1000 / weight , # ml/kg/min
          hr_max = 220 - age,
          hr_pct = hr / hr_max * 100)     # %HRmax
+
+# convert data types
+complete_data %>% 
+  mutate(sex_factor = as_factor(sex),
+         subject = as.character(subject),
+         hr = as.numeric(hr),
+         age = as.integer(age))
+
 complete_data$baseRvo2_rel <- complete_data$vo2 * 1000 / complete_data$weight
 
 # Add columns and summarise
-complete_data %>%
+final %>%
   group_by(subject) %>%
-  summarise(hr_avg = mean(hr), 
+  # to collapse data into one row per group, use summarise()
+  summarize(hr_avg = mean(hr), 
             stage_count = n())
+
+## 3) Data Analysis ----
+# basic mathematical operations
+
+# simple data operations
+# pull out values from a column
+sampleData_long[,4]  # position index
+sampleData_long[[4]]  # position  index
+sampleData_long$VO2 # name index
+sampleData_long %>% pull(VO2)
+
+# column names
+names(sampleData_long)
+
+colnames(sampleData_long)
+
+# doing calculations
+mean(sampleData_long$VO2)
+cor(sampleData_long$HR,sampleData_long$VO2)
+# do other stats? t-test
 
 ###############
 # Other stuff 
 # ------------#
 ## ggplot2 ----
 # Grammar of graphics: data + aesthetics + geometry.
-complete_data %>%
+final %>%
   ggplot(aes(x = workload_watts, y = vo2_rel, color = subject)) +
   geom_point() +
   geom_line(linetype = 2)
