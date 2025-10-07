@@ -246,7 +246,7 @@ getwd()
 ```
 
 ```
-## [1] "C:/Users/onis0001/Documents/r_workshop/slides"
+## [1] "/Users/saryu/Documents/r_workshop/slides"
 ```
 ]
 
@@ -279,7 +279,7 @@ getwd()
 ```
 
 ```
-## [1] "C:/Users/onis0001/Documents/r_workshop/slides"
+## [1] "/Users/saryu/Documents/r_workshop/slides"
 ```
 
 ``` r
@@ -289,6 +289,37 @@ getwd()
 ```
 ]
 
+---
+# Packages
+R is great because there are loads of packages to do various things. In these packages are loads of custom functions that enable you to take shortcuts – just like in Microsoft Excel. 
+
+--
+
+base R has loads of useful functions, but these packages will make your life even easier:
+
+- `tidyverse` should always be loaded in most of our use cases: handles most data wrangling and visualization tasks
+ - Contains `readr`, `dplyr`, `ggplot2`, `tidyr`, `purrr`, `tibble`, `stringr`, `forcats`
+- other useful packages:
+ - `stats`, `rstatix`, `psych`, `ggsignif`
+???
+remeber the kitchen analogy?
+
+---
+# Packages
+Before using a package, you have to 
+- download it onto your computer. The `install.packages()` function does this.
+
+``` r
+# install.packages("tidyverse")
+```
+ - Note: you only have to run this once per computer
+- load it into your session environment
+
+``` r
+library(tidyverse) 
+```
+ - Note: you have to do this *every* new session
+ 
 ---
 # Objects and Environemnt
 .pull-left[
@@ -629,33 +660,6 @@ gradebook$score
 ]]
 
 ---
-# Packages
--	R is great because there are loads of packages to do various things. In these packages are loads of custom functions that enable you to take shortcuts – just like in Microsoft Excel. 
--	base R has loads of useful functions, but these packages will make your life even easier:
- -	`tidyverse` should always be loaded in most of our use cases: handles most data wrangling and visualization tasks
-  - Contains `readr`, `dplyr`, `ggplot2`, `tidyr`, `purrr`, `tibble`, `stringr`, `forcats`
- - other useful packages:
- - `stats`, `rstatix`, `psych`, `ggsignif`
-???
-remeber the kitchen analogy?
-
----
-# Packages
-Before using a package, you have to 
-- download it onto your computer. The `install.packages()` function does this.
-
-``` r
-# install.packages("tidyverse")
-```
- - Note: you only have to run this once per computer
-- load it into your session environment
-
-``` r
-library(tidyverse) 
-```
- - Note: you have to do this *every* new session
- 
----
 # Example: dplyr (dee-plyer)
 The first thing I would learn is dplyr grammar. Its very useful and a true foundational piece of knowledge.
 *Useful code:*
@@ -791,7 +795,7 @@ Here are some tricks I love to use, and highly recommend you use when using R an
  - Instead of “clean this data”, search “reshape data from wide to long”
 -	Miscellaneous
  - More lines **IS NOT** better code. Clarity &gt; length
- - `sesssionInfo()`shows your R version and loaded packages
+ - `sessionInfo()`shows your R version and loaded packages
  - restart session (`cmd + shift + F10`) – sometimes this fixes issues
 
 ---

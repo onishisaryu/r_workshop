@@ -8,15 +8,19 @@ getwd()
 # setwd("/path/to/your/folder")
 
 ## 2) Packages ----
-# Install once; load every session
+# Install oncex
 # install.packages("tidyverse")
+# load every session
 library(tidyverse) # contains readr, dplyr, ggplot2, tidyr, purrr, tibble, stringr, forcats
 library(readxl) # read excel files
+
 library(stats) # base R stats
 library(rstatix) # pipe friendly stats
 library(psych) # psych stats
 library(lavaan) # latent variable stats
+
 library(ggsignif) # Significance Brackets for 'ggplot2'
+
 # for full list
 library(help = "ggsignif") 
 
@@ -24,14 +28,14 @@ library(help = "ggsignif")
 # Objects hold data and show up in the Environment.
 x <- 5 # single integer
 scores <- c(1, 2, 3) # a vector of integers
-# print in console
+
+# recall objects, print in console
 x
 scores
 
 ## 4) Import / Export Data  ----
 # Reading and writing data is a common first hurdle. 
-# instead of file -> import data -> ...
-# Use readr for csv, readxl for excel files
+# instead of file -> import data -> ... Use readr for csv, readxl for excel files
 read_csv("sampleData/cleanData.csv") 
 
 # put it into an object to save it in the working environment
@@ -83,7 +87,7 @@ sampleData_wide
                names_sep = "_")}
 sampleData_long
 
-## 3) dplyr ----
+## 3) Data Processing with dplyr ----
 raw_data <- read_csv('sampleData/dplyr.csv')
 
 # The pipe %>% strings steps together like sentences.
@@ -142,17 +146,31 @@ sampleData_long %>% pull(VO2)
 
 # column names
 names(sampleData_long)
-
 colnames(sampleData_long)
 
 # doing calculations
 mean(sampleData_long$VO2)
 cor(sampleData_long$HR,sampleData_long$VO2)
-# do other stats? t-test
+
+# stats package
+cor.test(~HR+VO2, sampleData_long)
+res <- cor.test(~HR+VO2, sampleData_long)
+res$estimate # correlation estimate
+res$statistic # t statistic
+res$p.value # p value
+
+t.test(VO2~condition, sampleData_long)
+res <- t.test(VO2~condition, sampleData_long)
+res$estimate
+res$statistic
+res$p.value
 
 ###############
 # Other stuff 
-# ------------#
+# ----------- #
+# tips and tricks ----
+source('packages.R')
+
 ## ggplot2 ----
 # Grammar of graphics: data + aesthetics + geometry.
 final %>%
