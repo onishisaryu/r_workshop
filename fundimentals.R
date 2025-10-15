@@ -6,6 +6,7 @@
 # starting point for program operations
 getwd() 
 # setwd("/path/to/your/folder")
+# If using an R Project, this is automatically set to project folder!
 
 ## 2) Packages ----
 # install.packages("tidyverse") # Install once
@@ -35,15 +36,15 @@ scores
 ## 4) Import / Export Data  ----
 # Reading and writing data is a common first hurdle. 
 # instead of file -> import data -> ... Use readr for csv, readxl for excel files
-read_csv("data/sample/cleanData.csv") 
+read_csv('data/sample/dplyr.csv')
+
 
 # put it into an object to save it in the working environment
-exceldata <- read_xlsx("data/sample/cleanData.xlsx", sheet = "cleanData")
-clean_data <- read_csv("data/sample/cleanData.csv")
+exceldata <- read_xlsx("data/sample/workshop.xlsx", sheet = "cleanData")
+clean_data <- read_csv('data/sample/dplyr.csv')
 
-# use write_csv() carefully. it will override existing data.
+# CAUTION: use write_csv() carefully. it will override existing data.
 write_csv(clean_data,"data/clean/workshop.csv")
-
 
 #####
 # ------------------------------ #
@@ -72,11 +73,6 @@ read_csv("data/sample/wide.csv")
 
 # long data - each row should be one data point
 read_csv("data/sample/long.csv")
-{sampleData_long  <- 
-  read_csv("data/sample/wide.csv") %>% 
-  pivot_longer(cols = -subject,
-               names_to = c(".value","condition"),
-               names_sep = "_")}
 
 ## 3) Data Processing with dplyr ----
 raw_data <- read_csv('data/sample/dplyr.csv')
@@ -124,10 +120,10 @@ final %>%
 
 # simple data operations
 # pull out values from a column
-sampleData_long[,4]  # position index
-sampleData_long[[4]]  # position  index
-sampleData_long$VO2 # name index
-sampleData_long %>% pull(VO2)
+sampleData_long[,4]              # base R - position index
+sampleData_long[[4]]             # base R - position index
+sampleData_long$VO2              # base R - name (most common)
+sampleData_long %>% pull(VO2)    # tidyverse - best for piping
 
 # column names
 names(sampleData_long)
