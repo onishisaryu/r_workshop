@@ -45,16 +45,26 @@ this is how you comment
 --&gt;
 ---
 # Vibe coding
-Generative AI will literally do everything for you these days, including writing code. &lt;br&gt;
+* Vibe coding is the emerging practice of using AI to write code by describing what you want.
 
-It might feel like you don't need to learn the basics, but I strongly disagree.&lt;br&gt;
+--
+* It might feel like you don't need to learn the basics, but I disagree.
 
-Knowing even the basics will speed up the process **a lot**. 
+--
+* Knowing even the basics will speed up the process **a lot**. 
 
 ---
 # The scope of today's workshop
-Our goal today is to build the most minimal foundation on which you can stack your coding skills onto. In interest of time, we will skip:
+Our goal today is to build the most minimal foundation on which you can stack your coding skills onto. 
+&lt;br&gt;&lt;br&gt;
+
+--
+In interest of time, we will skip:
+
+--
 - Legacy basics like base subsetting - easier methods exist via *packages*.
+
+--
 - Flow control (`if/else` statements, for loops, `purrr::map()`) and custom functions 
  - *extremely* useful, but not required for basic analysis.
 
@@ -147,10 +157,15 @@ It is also possible you might not need to learn R:
 
 --
 -	Relatively simple analysis (t-test, correlation analysis) with smaller datasets.
+&lt;br&gt;
 
 --
-In the end, R is another tool to use. It can make data analysis less of a hassle for some researchers, but using R doesn’t make your analysis better. 
--	R won’t magically improve your analysis, but it can make your work faster, cleaner, and reproducible — if your problems match its strengths.
+
+Ultimately, R is another tool to use. 
+
+--
+- R won’t magically improve your analysis, but it can make your work *faster*, *cleaner*, and **reproducible**.
+
 ---
 
 # Fundimentals of R
@@ -162,14 +177,20 @@ Here are the fundamentals of R that genAI assumes you know:
 - import and export data
 - data structure: vectors, data frames and shape
 - packages (dplyr example)
-- control structures: for and if
-- functions
+- flow control*: for and if
+- functions*
 ---
 
 # Difference between R and RStudio
 Some people may gloss over this detail, but these are important distinctions:
+
+--
 - **R**: the programming language *and* interpreter (the engine).
+
+--
 - **Packages**: add-ons for R (e.g., tidyverse, gt).
+
+--
 - **RStudio**: an Integrated development environment, or IDE (contains the console + plots + Git)
 
 ---
@@ -211,20 +232,27 @@ Some people may gloss over this detail, but these are important distinctions:
  - clean environment for maximum productiveity
  
 ---
+# Please open up R Studio
+.center[
+&lt;img src="img/rstudio.png" width="80%"&gt;
+]
+ 
+---
 # Scripts, Console, Terminal
+.pull-left[
+- The **console** is where the code runs.
+ - *Note:* You can test code here, but it will NOT save.
+ 
+- The **environment** is where stored objects appear
+
 - The **R script** is the document your write code in ('.R' file extension)
 
---
-- The **console** is where the code runs.
-
---
- - *Note:* You can test code here, but it will NOT save.
-
---
--	The **terminal** is the system command line. Will not execute R code.
-
---
- - Don't worry about it unless you know bash.
+]
+ 
+.pull-right[
+![Rstudio](img/rstudio.png)
+&lt;!-- &lt;img src="img/rstudio.png" width="80%"&gt; --&gt;
+]
  
 ---
 # Working Directory 
@@ -248,11 +276,6 @@ getwd()
 ```
 ## [1] "/Users/saryu/Documents/r_workshop/slides"
 ```
-]
-
---
-.pull-left[
-
 ]
 
 ???
@@ -290,6 +313,54 @@ getwd()
 ]
 
 ---
+# Working Directory
+Now that you know about working directories, let's organize our projects well:
+
+--
+- **Sample folder structure:**
+
+--
+  - `data/raw/` - original, untouched data files
+  
+--
+  - `data/clean/` - processed, analysis-ready data
+  
+--
+  - `output/` - figures, tables, results
+  
+--
+  - R scripts in the project root to easily access folders
+
+--
+- **Use relative paths** - makes your code portable and reproducible
+  - `C:/Users/YourName/Documents/data.csv` -&gt; `data/raw/data.csv`
+  - setting working directory (`setwd()`) allows us to use relative paths.
+  
+---
+# R Projects: The Modern Approach
+
+**Instead of using `setwd()`, you can use R Projects (`.Rproj` files)**
+
+.pull-left[
+**Benefits:**
+- Automatically sets working directory to project folder
+- Makes your code more portable and reproducible
+- Keeps everything self-contained
+- Easy to switch between projects
+]
+
+--
+.pull-right[
+**How to create:**
+1. File → New Project
+2. Choose location
+3. Name your project
+4. RStudio creates a `.Rproj` file
+
+**Always open your project by double-clicking the `.Rproj` file!**
+]
+
+---
 # Packages
 R is great because there are loads of packages to do various things. In these packages are loads of custom functions that enable you to take shortcuts – just like in Microsoft Excel. 
 
@@ -321,7 +392,7 @@ library(tidyverse)
  - Note: you have to do this *every* new session
  
 ---
-# Objects and Environemnt
+# Objects and Environment
 .pull-left[
 Data and outputs should always be stored.
 - This allows you to recall data.
@@ -400,7 +471,7 @@ To begin analysis, you must import data from a specific folder.
 
 ``` r
 # to import data
-data &lt;- readr::read_csv("sampleData/cleanData.csv")
+data &lt;- readr::read_csv("data/sample/cleanData.csv")
 # for excel files (gross) use readxl::read_xlsx("sample/cleanData.xlsx")
 head(data[1:4])
 ```
@@ -442,7 +513,7 @@ You can also write data to a specified folder.
 ``` r
 # to import data
 clean_data &lt;- data[1:4]
-# write_csv(clean_data,"workshop.csv")
+write_csv(clean_data,"data/clean/workshop.csv")
 ```
 ]
 
@@ -670,76 +741,36 @@ The first thing I would learn is dplyr grammar. Its very useful and a true found
 -	`group_by()` and `summarize()` to summarize rows
 
 ---
-# control structures
-These are not necessarily “essential”, but it is very useful, especially in the context of repeated tasks.
-## if else statements
--	Execute code **if** a specified condition is met
-
-``` r
-value = 50
-weight = 50
-test = "shuttle run"
-if (test == "VO2max") {
-  final = value/weight
-} else {
-  final = value
-}
-```
---
-
-```
-## [1] 50
-```
----
-# control structures
-## for loops
--	Repeat operations when the sequence can be specified.
-
-``` r
-files = 10
-counter &lt;- c()
-for (n in seq(files)) {
-  counter &lt;- c(counter, n)
-}
-```
---
-
-```
-##  [1]  1  2  3  4  5  6  7  8  9 10
-```
----
-# functions
-- There are loads of preprogrammed functions, but you can also make your own.
- - `library()`, `getwd()`, `read_csv()`, are all examples of functions.
- 
--	Functions can reduce clutter and/or repetition, making debugging easier.
-
--	If you abide by the “functional programming” line of thinking, you utilize functions, instead of for loops to execute complex tasks. 
-
----
 # How to structure your R script
 ## General guidelines
 -	Order is important. 
  - R executes code from top to bottom. If you call an object before creating it, you’ll get an error
 
 --
+
 -	Name objects descriptively, use comments and separate section for readability
 
 ---
 # How to structure your R script
 ## Flow:
 
---
-- Always load libraries at the top - scattering it across your document can make it prone to bugs
+1. Always load libraries at the top - scattering it across your document can make it prone to bugs
 
 --
-- Options (digits, scipen, etc)
+
+2. Options (digits, scipen, etc)
 
 --
-- Import data (into an object!)
+
+3. Import data (into an object!)
 
 --
-- Data cleaning and analysis
+
+4. Data cleaning and analysis
+
+--
+
+5. Write data to appropriate file path
 
 ???
 	If csv, read_csv()
@@ -749,9 +780,10 @@ o	Conduct analysis
 o	Outputs (plots, tables, exports) should always be at the bottom.
 
 ---
+
 # Pseudocode 
--	The process of pseudo-coding was introduced to me recently, and I think this is a great approach. Organization is EXTREMELY important in coding. This helps.
--	What is pseudocoding? This is the process of writing out your goals in plain English before writing the code. For example:
+ **Plan before you code** - write your logic in plain English first!
+-	Pseudocoding is the process of writing out your goals in plain English before writing the code. For example:
 
 ``` r
 # this program calculates the mean and sd of column x
@@ -764,27 +796,43 @@ o	Outputs (plots, tables, exports) should always be at the bottom.
 ## print message: the mean is {mean} and sd is {sd}
 ```
 
+???
+-	The process of pseudo-coding was introduced to me recently, and I think this is a great approach. Organization is EXTREMELY important in coding. This helps.
+
 ---
+
 # Tips and tricks
 Here are some tricks I love to use, and highly recommend you use when using R and R studio
 -	Keyboard shortcuts are your friend
- -	Use tab to autocomplete names to avoid typos (typos break code)
- - Use `cmd + shift + m` or `ctrl + shift + m` for pipe operator
- - `Cmd + enter` or `ctrl + enter` to run a line of code  
- - `Cmd + option + o` or `Alt + 0` to collapse all
+ - Use tab to autocomplete names to avoid typos (typos break code)
+ 
+--
+ - `cmd + enter` or `ctrl + enter` to run a line of code  
+  
+--
+ - `cmd + shift + m` or `ctrl + shift + m` for pipe operator
+  
+--
+ - `cmd + option + down` or `ctrl + alt + down` to duplicate line(s)
+  
+--
+ - `cmd + shift + c` to comment out sections
+  
+--
+ - `cmd + option + o` or `Alt + 0` to collapse all
 
 
 ---
 # Tips and tricks
 -	Use comments and headers 
  - hash (#) makes non-executable chunks – great for comments
- - 5 hashed `#####` or `#----` allows the section under it to be collapsed
+ - 5 hashes (`#####` or `#----`) allows the section under it to be collapsed
  - Pro tip: for headers, do # section 1 #### or # section 1 ----
 -	Need a reminder on how to use a function? Use the help tab (accessible by putting “?” before the function name)
 -	Checking data
  - `View()` and `head()` for quick peak at the data frame. 
  - `str()` and `glimpse()` for data structure and data type 
- 
+
  
 ---
 # Tips and tricks
@@ -796,7 +844,7 @@ Here are some tricks I love to use, and highly recommend you use when using R an
 -	Miscellaneous
  - More lines **IS NOT** better code. Clarity &gt; length
  - `sessionInfo()`shows your R version and loaded packages
- - restart session (`cmd + shift + F10`) – sometimes this fixes issues
+ - restart session (`cmd + shift + 0`) – sometimes this fixes issues
 
 ---
 # Tips and tricks
@@ -804,6 +852,52 @@ Here are some tricks I love to use, and highly recommend you use when using R an
  - Use functions, but not too many. if I have to scroll up and down constantly just to follow the code, it’s too much.
  - New lines for new operations or long lists
  - Camel case or dot case, not snake case.
+ 
+ 
+ ---
+
+&lt;!-- --- --&gt;
+&lt;!-- # control structures --&gt;
+&lt;!-- These are not necessarily “essential”, but it is very useful, especially in the context of repeated tasks. --&gt;
+&lt;!-- ## if else statements --&gt;
+&lt;!-- -	Execute code **if** a specified condition is met --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- value = 50 --&gt;
+&lt;!-- weight = 50 --&gt;
+&lt;!-- test = "shuttle run" --&gt;
+&lt;!-- if (test == "VO2max") { --&gt;
+&lt;!--   final = value/weight --&gt;
+&lt;!-- } else { --&gt;
+&lt;!--   final = value --&gt;
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- -- --&gt;
+&lt;!-- ```{r,echo=F} --&gt;
+&lt;!-- print(final) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- --- --&gt;
+&lt;!-- # control structures --&gt;
+&lt;!-- ## for loops --&gt;
+&lt;!-- -	Repeat operations when the sequence can be specified. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- files = 10 --&gt;
+&lt;!-- counter &lt;- c() --&gt;
+&lt;!-- for (n in seq(files)) { --&gt;
+&lt;!--   counter &lt;- c(counter, n) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- -- --&gt;
+&lt;!-- ```{r,echo=F} --&gt;
+&lt;!-- print(counter) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- --- --&gt;
+&lt;!-- # functions --&gt;
+&lt;!-- - There are loads of preprogrammed functions, but you can also make your own. --&gt;
+&lt;!--  - `library()`, `getwd()`, `read_csv()`, are all examples of functions. --&gt;
+
+&lt;!-- -	Functions can reduce clutter and/or repetition, making debugging easier. --&gt;
+
+&lt;!-- -	If you abide by the “functional programming” line of thinking, you utilize functions, instead of for loops to execute complex tasks.  --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
