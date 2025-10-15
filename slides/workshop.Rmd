@@ -375,6 +375,7 @@ Before using a package, you have to
 # install.packages("tidyverse")
 ```
  - Note: you only have to run this once per computer
+ 
 - load it into your session environment
 ```{r}
 library(tidyverse) 
@@ -498,19 +499,17 @@ write_csv(clean_data,"data/clean/workshop.csv")
 .pull-right[
 **Code example:**
 ```{r}
-head(clean_data, n=3)
+gradebook <- data.frame(
+  name  = c("aaron", "jacqueline", "blake"),
+  score = c(55, 22, 80)
+)
 
-clean_data$mean_angle
+gradebook
+
+gradebook$score
 ```
 ]
-???
-Vectors are the atomic unit of R; most structures are made of vectors.
--	Vectors contain homogeneous data
-- Note: *Not* the same as lists
-Data frames are tables/spreadsheets in R. Very useful, especially when data wrangling with tidyverse.
-- This is why a lot of sample code uses "df" for tables
-- Note: this is the same as a tibble 
- 
+
 ---
 # Data structure
 
@@ -527,16 +526,18 @@ Data frames are tables/spreadsheets in R. Very useful, especially when data wran
 .pull-right[
 **Code example:**
 ```{r}
-gradebook <- data.frame(
-  name  = c("aaron", "jacqueline", "blake"),
-  score = c(55, 22, 80)
-)
+head(clean_data, n=3)
 
-gradebook
-
-gradebook$score
+clean_data$mean_angle
 ```
 ]
+???
+Vectors are the atomic unit of R; most structures are made of vectors.
+-	Vectors contain homogeneous data
+- Note: *Not* the same as lists
+Data frames are tables/spreadsheets in R. Very useful, especially when data wrangling with tidyverse.
+- This is why a lot of sample code uses "df" for tables
+- Note: this is the same as a tibble 
 
 ---
 # Data structure
@@ -713,7 +714,9 @@ Here are some tricks I love to use, and highly recommend you use when using R an
  - Camel case or dot case, not snake case.
  
  
- ---
+---
+
+# Questions?
 
 <!-- --- -->
 <!-- # control structures -->

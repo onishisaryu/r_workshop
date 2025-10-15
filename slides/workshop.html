@@ -384,6 +384,7 @@ Before using a package, you have to
 # install.packages("tidyverse")
 ```
  - Note: you only have to run this once per computer
+ 
 - load it into your session environment
 
 ``` r
@@ -534,6 +535,47 @@ write_csv(clean_data,"data/clean/workshop.csv")
 **Code example:**
 
 ``` r
+gradebook &lt;- data.frame(
+  name  = c("aaron", "jacqueline", "blake"),
+  score = c(55, 22, 80)
+)
+
+gradebook
+```
+
+```
+##         name score
+## 1      aaron    55
+## 2 jacqueline    22
+## 3      blake    80
+```
+
+``` r
+gradebook$score
+```
+
+```
+## [1] 55 22 80
+```
+]
+
+---
+# Data structure
+
+.pull-left[
+## Data frames
+-	Data frames are R table
+ - Tibbles are the modern `tidyverse` equivalent.
+
+## Accessing columns
+- Columns can be extracted with `$`
+]
+--
+
+.pull-right[
+**Code example:**
+
+``` r
 head(clean_data, n=3)
 ```
 
@@ -601,47 +643,6 @@ Vectors are the atomic unit of R; most structures are made of vectors.
 Data frames are tables/spreadsheets in R. Very useful, especially when data wrangling with tidyverse.
 - This is why a lot of sample code uses "df" for tables
 - Note: this is the same as a tibble 
- 
----
-# Data structure
-
-.pull-left[
-## Data frames
--	Data frames are R table
- - Tibbles are the modern `tidyverse` equivalent.
-
-## Accessing columns
-- Columns can be extracted with `$`
-]
---
-
-.pull-right[
-**Code example:**
-
-``` r
-gradebook &lt;- data.frame(
-  name  = c("aaron", "jacqueline", "blake"),
-  score = c(55, 22, 80)
-)
-
-gradebook
-```
-
-```
-##         name score
-## 1      aaron    55
-## 2 jacqueline    22
-## 3      blake    80
-```
-
-``` r
-gradebook$score
-```
-
-```
-## [1] 55 22 80
-```
-]
 
 ---
 # Data structure
@@ -854,7 +855,9 @@ Here are some tricks I love to use, and highly recommend you use when using R an
  - Camel case or dot case, not snake case.
  
  
- ---
+---
+
+# Questions?
 
 &lt;!-- --- --&gt;
 &lt;!-- # control structures --&gt;

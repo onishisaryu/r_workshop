@@ -11,12 +11,12 @@ getwd()
 ## 2) Packages ----
 # install.packages("tidyverse") # Install once
 # load every session
-library(tidyverse) # contains readr, dplyr, ggplot2, tidyr, purrr, tibble, stringr, forcats
-library(readxl) # read excel files
+library(tidyverse)  # contains readr, dplyr, ggplot2, tidyr, purrr, tibble, stringr, forcats
+library(readxl)     # read excel files
 
-library(stats) # base R stats
-library(rstatix) # pipe friendly stats
-library(psych) # psych stats
+library(stats)      # base R stats
+library(rstatix)    # pipe friendly stats
+library(psych)      # psych stats
 
 library(ggsignif) # Significance Brackets for 'ggplot2'
 
@@ -37,7 +37,6 @@ scores
 # Reading and writing data is a common first hurdle. 
 # instead of file -> import data -> ... Use readr for csv, readxl for excel files
 read_csv('data/sample/dplyr.csv')
-
 
 # put it into an object to save it in the working environment
 exceldata <- read_xlsx("data/sample/workshop.xlsx", sheet = "cleanData")
@@ -94,19 +93,19 @@ complete_data <- read_csv("data/sample/dplyr2.csv")
 # mutate() to add a new column
 final <- 
   complete_data %>%
-  mutate(vo2_rel = vo2 * 1000 / weight , # ml/kg/min
+  mutate(vo2_rel = vo2 * 1000 / weight, # ml/kg/min
          hr_max = 220 - age,
          hr_pct = hr / hr_max * 100)     # %HRmax
 final
 
+complete_data$baseRvo2_rel <- complete_data$vo2 * 1000 / complete_data$weight
+
 # convert data types
 complete_data %>% 
   mutate(sex_factor = as_factor(sex),
-         subject = as.character(subject),
-         hr = as.numeric(hr),
-         age = as.integer(age))
-
-complete_data$baseRvo2_rel <- complete_data$vo2 * 1000 / complete_data$weight
+         subject    = as.character(subject),
+         hr         = as.numeric(hr),
+         age        = as.integer(age))
 
 # Add columns and summarise
 final %>%
@@ -117,6 +116,7 @@ final %>%
 
 ## 3) Data Analysis ----
 # basic mathematical operations
+
 
 # simple data operations
 # pull out values from a column
@@ -145,4 +145,3 @@ res <- t.test(VO2~condition, sampleData_long)
 res$estimate
 res$statistic
 res$p.value
-
